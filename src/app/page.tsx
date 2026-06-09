@@ -193,16 +193,20 @@ export default function Home() {
                     type="button"
                     onClick={() => handleCreateTemplate(template)}
                     disabled={isLoading}
-                    className="w-full min-w-0 rounded-2xl border border-slate-800 bg-slate-950/60 p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-indigo-500/40 hover:bg-slate-900/80 overflow-hidden"
+                    className="flex flex-col justify-between h-full w-full min-w-0 rounded-2xl border border-slate-800 bg-slate-950/60 p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-indigo-500/40 hover:bg-slate-900/80 overflow-hidden animate-card-rise"
                   >
-                    <div className="flex min-w-0 items-start justify-between gap-3">
-                      <div className="flex min-w-0 items-center gap-2 text-indigo-200">
-                        <Icon size={16} />
-                        <span className="min-w-0 break-words text-sm font-semibold">{template.name}</span>
+                    <div className="w-full">
+                      <div className="flex items-center gap-2 text-indigo-200 mb-2">
+                        <Icon size={16} className="shrink-0" />
+                        <span className="text-sm font-semibold break-words">{template.name}</span>
                       </div>
-                      <span className="shrink-0 rounded-full border border-indigo-500/20 bg-indigo-500/10 px-2 py-1 text-[10px] uppercase tracking-[0.25em] text-indigo-200">{template.language}</span>
+                      <p className="text-xs text-slate-400 leading-relaxed">{template.description}</p>
                     </div>
-                    <p className="mt-3 text-xs text-slate-400 leading-relaxed break-words whitespace-normal overflow-wrap-anywhere">{template.description}</p>
+                    <div className="mt-4">
+                      <span className="inline-block rounded-full border border-indigo-500/20 bg-indigo-500/10 px-2.5 py-0.5 text-[9px] uppercase tracking-[0.2em] text-indigo-200 font-medium">
+                        {template.language}
+                      </span>
+                    </div>
                   </button>
                 );
               })}
