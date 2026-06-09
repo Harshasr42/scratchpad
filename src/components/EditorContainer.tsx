@@ -14,6 +14,8 @@ export default function EditorContainer({
   onChange,
   language,
 }: EditorContainerProps) {
+  const isBlank = !content.trim();
+
   // Translate language selection value to Monaco editor supported languages
   const getMonacoLanguage = (lang: string) => {
     switch (lang) {
@@ -52,6 +54,12 @@ export default function EditorContainer({
 
   return (
     <div className="flex-1 w-full bg-[linear-gradient(180deg,#070b13_0%,#090e18_100%)] relative overflow-hidden flex flex-col border-t border-white/6 shadow-[inset_0_1px_0_rgba(255,255,255,0.02)]">
+      {isBlank && (
+        <div className="pointer-events-none absolute left-5 top-4 z-10 rounded-2xl border border-indigo-400/15 bg-slate-950/60 px-4 py-3 text-left shadow-2xl shadow-black/20 backdrop-blur-md">
+          <p className="text-[11px] uppercase tracking-[0.24em] text-indigo-300/90">Writing area</p>
+          <p className="mt-1 text-sm text-slate-200">Start typing here — your changes save automatically.</p>
+        </div>
+      )}
       <Editor
         height="100%"
         width="100%"
