@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  /* Premium Slate Dark Palette */
-  --background: #090d16;
-  --foreground: #f8fafc;
-  --card: #111827;
-  --card-foreground: #f8fafc;
-  --border: #1f2937;
-  --primary: #6366f1;
-  --primary-hover: #4f46e5;
-  --primary-glow: rgba(99, 102, 241, 0.15);
+  /* Calm, minimal dark palette */
+  --background: #111318;
+  --foreground: #f5f7fb;
+  --card: #171a21;
+  --card-foreground: #edf2f7;
+  --border: #232833;
+  --primary: #9aa4b2;
+  --primary-hover: #c8d0de;
+  --primary-glow: rgba(154, 164, 178, 0.12);
   
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -25,7 +25,9 @@
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.03), transparent 18%),
+    linear-gradient(180deg, #111318 0%, #151821 45%, #111318 100%);
   color: var(--foreground);
   font-family: var(--font-sans);
   min-height: 100vh;
@@ -54,20 +56,36 @@ body {
   background: #334155;
 }
 
-/* Glassmorphism utility class */
+.monaco-editor,
+.monaco-editor-background,
+.monaco-editor .margin,
+.monaco-editor .lines-content {
+  background: transparent !important;
+}
+
+.monaco-editor .line-numbers {
+  color: rgba(148, 163, 184, 0.75) !important;
+}
+
+.monaco-editor .view-overlays .current-line,
+.monaco-editor .view-overlays .current-line ~ .line-numbers {
+  background: rgba(148, 163, 184, 0.05) !important;
+}
+
+/* Soft glass surfaces */
 .glass-panel {
-  background: rgba(17, 24, 39, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(18, 22, 30, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .glass-panel-glow {
-  background: rgba(17, 24, 39, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(99, 102, 241, 0.15);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), 0 0 16px 0 var(--primary-glow);
+  background: linear-gradient(180deg, rgba(23, 27, 35, 0.92), rgba(15, 18, 24, 0.98));
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(186, 196, 210, 0.12);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.32), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
 }
 
 /* Neon key glows */
@@ -78,7 +96,7 @@ body {
 /* Custom Fade Animations */
 @keyframes slideIn {
   from {
-    transform: translateY(1rem);
+    transform: translateY(6px);
     opacity: 0;
   }
   to {
@@ -102,6 +120,47 @@ body {
   }
 }
 
+@keyframes floaty {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.18; }
+  50% { transform: translate3d(0, -9px, 0) scale(1.02); opacity: 0.24; }
+}
+
+@keyframes cardRise {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .glow-dot {
   animation: pulse-glow 2s infinite ease-in-out;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(110px);
+  opacity: 0.14;
+  pointer-events: none;
+  animation: floaty 8s ease-in-out infinite;
+}
+
+.ambient-orb-one {
+  top: 12%; left: 8%; width: 180px; height: 180px; background: rgba(255, 255, 255, 0.08);
+}
+
+.ambient-orb-two {
+  top: 22%; right: 12%; width: 220px; height: 220px; background: rgba(255, 255, 255, 0.06); animation-delay: -2s;
+}
+
+.ambient-orb-three {
+  bottom: 10%; left: 40%; width: 160px; height: 160px; background: rgba(255, 255, 255, 0.05); animation-delay: -4s;
+}
+
+.animate-card-rise {
+  animation: cardRise 0.35s ease-out both;
 }

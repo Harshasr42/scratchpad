@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import Header from '@/components/Header';
 import EditorContainer from '@/components/EditorContainer';
 import { useToast } from '@/components/Toast';
+import { saveRecentPad } from '@/lib/recentPads';
 
 interface PageProps {
   params: Promise<{
@@ -57,6 +58,7 @@ export default function PadPage({ params }: PageProps) {
           setContent(data.content ?? '');
           setLanguage(data.language ?? 'plaintext');
           setLastSaved(data.last_updated ?? null);
+          saveRecentPad(pathKey, data.language ?? 'plaintext');
           setSaveStatus('saved');
           setIsLoading(false);
           
@@ -107,6 +109,7 @@ export default function PadPage({ params }: PageProps) {
       }
 
       const data = await response.json();
+      saveRecentPad(pathKey, languageToSave);
       setSaveStatus('saved');
       setLastSaved(data.last_updated);
       return true;
@@ -189,7 +192,11 @@ export default function PadPage({ params }: PageProps) {
   // Workspace Layout
   // -------------------------------------------------------------
   return (
-    <div className="w-full h-screen flex flex-col overflow-hidden bg-[#030712]">
+    <div className="w-full min-h-screen flex flex-col overflow-hidden bg-[linear-gradient(180deg,#070b13_0%,#080d15_45%,#060912_100%)] relative">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(139,156,255,0.06),_transparent_18%),radial-gradient(circle_at_bottom_right,_rgba(56,189,248,0.06),_transparent_20%)]" />
+      <div className="absolute top-10 right-10 h-36 w-36 rounded-full bg-indigo-500/8 blur-3xl" />
+      <div className="absolute bottom-8 left-10 h-32 w-32 rounded-full bg-cyan-500/8 blur-3xl" />
+      <div className="relative z-10 flex flex-col min-h-screen">
       {/* Premium Header */}
       <Header
         pathKey={pathKey}
@@ -207,6 +214,7 @@ export default function PadPage({ params }: PageProps) {
         onChange={handleContentChange}
         language={language}
       />
+      </div>
     </div>
   );
 }

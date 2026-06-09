@@ -51,7 +51,7 @@ export default function EditorContainer({
   };
 
   return (
-    <div className="flex-1 w-full bg-[#030712] relative overflow-hidden flex flex-col">
+    <div className="flex-1 w-full bg-[linear-gradient(180deg,#070b13_0%,#090e18_100%)] relative overflow-hidden flex flex-col border-t border-white/6 shadow-[inset_0_1px_0_rgba(255,255,255,0.02)]">
       <Editor
         height="100%"
         width="100%"
@@ -63,7 +63,7 @@ export default function EditorContainer({
           editor.focus();
         }}
         loading={
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#030712] text-slate-400 gap-3">
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[linear-gradient(180deg,#070b13_0%,#090e18_100%)] text-slate-400 gap-3">
             <div className="w-8 h-8 rounded-full border-2 border-indigo-500/20 border-t-indigo-500 animate-spin" />
             <span className="text-xs font-mono font-medium tracking-widest text-slate-500 uppercase">
               Initializing Workspace...
@@ -71,7 +71,7 @@ export default function EditorContainer({
           </div>
         }
         options={{
-          fontSize: 14,
+          fontSize: 13.5,
           fontFamily: 'var(--font-geist-mono), Menlo, Monaco, "Courier New", monospace',
           minimap: { enabled: false },
           wordWrap: 'on',
@@ -79,11 +79,11 @@ export default function EditorContainer({
           scrollbar: {
             vertical: 'visible',
             horizontal: 'visible',
-            verticalScrollbarSize: 10,
-            horizontalScrollbarSize: 10,
+            verticalScrollbarSize: 9,
+            horizontalScrollbarSize: 9,
             useShadows: false,
           },
-          padding: { top: 16, bottom: 16 },
+          padding: { top: 18, bottom: 18 },
           cursorBlinking: 'smooth',
           cursorSmoothCaretAnimation: 'on',
           smoothScrolling: true,
@@ -92,6 +92,10 @@ export default function EditorContainer({
           automaticLayout: true,
           fontLigatures: true,
           renderLineHighlight: 'all',
+          lineDecorationsWidth: 10,
+          glyphMargin: false,
+          folding: false,
+          renderFinalNewline: 'on',
           hideCursorInOverviewRuler: true,
           overviewRulerBorder: false,
         }}

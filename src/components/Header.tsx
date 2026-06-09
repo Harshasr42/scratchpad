@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Copy, Save, Check, FileCode, RefreshCw, ChevronDown, CheckCircle2 } from 'lucide-react';
+import { Copy, Save, Check, FileCode, RefreshCw, ChevronDown, CheckCircle2, Download } from 'lucide-react';
 import { useToast } from './Toast';
 
 interface HeaderProps {
@@ -91,19 +91,31 @@ export default function Header({
   };
 
   const currentLanguageLabel = LANGUAGES.find((l) => l.value === language)?.label || 'Plain Text';
+  const wordCount = content.trim().split(/\s+/).filter(Boolean).length;
+  const lineCount = content.split('\n').length;
+
+  const exportAsText = () => {
+    const blob = new Blob([content || ''], { type: 'text/plain;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${pathKey || 'scratchpad'}.txt`;
+    link.click();
+    URL.revokeObjectURL(link.href);
+    showToast('Pad exported as .txt', 'success');
+  };
 
   return (
-    <header className="sticky top-0 z-40 w-full glass-panel border-b border-slate-800/80 px-4 md:px-6 py-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+    <header className="sticky top-0 z-40 w-full glass-panel border-b border-white/6 px-4 md:px-6 py-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 shadow-[0_6px_30px_rgba(0,0,0,0.18)]">
       {/* Brand logo & Active Key path */}
       <div className="flex items-center gap-3 overflow-hidden">
         <Link 
           href="/"
           className="flex items-center gap-2 group flex-shrink-0"
         >
-          <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold text-sm shadow-md shadow-indigo-600/30 group-hover:scale-105 transition-transform duration-200">
+          <div className="w-8 h-8 rounded-xl bg-white text-slate-950 flex items-center justify-center text-[11px] font-black shadow-sm shadow-black/20 group-hover:scale-105 transition-transform duration-200">
             SP
           </div>
-          <span className="font-extrabold text-lg bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-300 select-none hidden md:block">
+          <span className="font-semibold text-lg text-slate-100 select-none hidden md:block tracking-tight">
             ScratchPad
           </span>
         </Link>
@@ -112,7 +124,7 @@ export default function Header({
         <div className="w-px h-6 bg-slate-800 hidden md:block" />
 
         {/* Active Key Path */}
-        <div className="flex items-center gap-1.5 overflow-hidden bg-slate-900/60 hover:bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg transition-colors max-w-full">
+        <div className="flex items-center gap-1.5 overflow-hidden bg-white/4 hover:bg-white/6 border border-white/8 px-3 py-1.5 rounded-xl transition-colors max-w-full shadow-inner shadow-black/10">
           <span className="text-xs text-slate-500 font-mono select-none">/</span>
           <span className="text-xs md:text-sm text-indigo-300 font-mono font-medium truncate max-w-[120px] sm:max-w-[200px] md:max-w-[300px]">
             {pathKey}
@@ -120,14 +132,14 @@ export default function Header({
           <button
             onClick={copyShareUrl}
             title="Copy sharing link"
-            className="text-slate-500 hover:text-slate-200 transition-colors p-1 rounded hover:bg-slate-800 ml-1.5 flex-shrink-0"
+            className="text-slate-400 hover:text-slate-100 transition-colors p-1 rounded hover:bg-white/6 ml-1.5 flex-shrink-0"
           >
             {copiedUrl ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
           </button>
         </div>
 
         {/* Status Dot */}
-        <div className="flex items-center gap-2 flex-shrink-0 bg-slate-900/40 border border-slate-800/50 px-2.5 py-1 rounded-full">
+        <div className="flex items-center gap-2 flex-shrink-0 bg-white/4 border border-white/8 px-2.5 py-1 rounded-full shadow-inner shadow-black/10">
           <span className={`w-2 h-2 rounded-full glow-dot ${getStatusColor()}`} />
           <span className="text-[10px] md:text-xs font-semibold text-slate-400">
             {getStatusLabel()}
@@ -141,7 +153,7 @@ export default function Header({
         <div className="relative">
           <button
             onClick={() => setIsLangOpen(!isLangOpen)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/80 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-xs md:text-sm font-medium text-slate-300 hover:text-white transition-all select-none"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/4 hover:bg-white/6 border border-white/8 hover:border-white/12 text-xs md:text-sm font-medium text-slate-200 hover:text-white transition-all select-none shadow-inner shadow-black/10"
           >
             <FileCode size={14} className="text-indigo-400" />
             <span className="truncate max-w-[80px] sm:max-w-none">{currentLanguageLabel}</span>
@@ -154,7 +166,7 @@ export default function Header({
                 className="fixed inset-0 z-10" 
                 onClick={() => setIsLangOpen(false)} 
               />
-              <div className="absolute right-0 mt-2 w-48 rounded-lg bg-slate-900 border border-slate-850 shadow-2xl p-1 z-20 max-h-60 overflow-y-auto">
+              <div className="absolute right-0 mt-2 w-48 rounded-2xl bg-slate-950 border border-white/6 shadow-2xl p-1 z-20 max-h-60 overflow-y-auto">
                 {LANGUAGES.map((lang) => (
                   <button
                     key={lang.value}
@@ -178,10 +190,24 @@ export default function Header({
           )}
         </div>
 
+        <div className="hidden md:flex items-center gap-2 rounded-full border border-white/8 bg-white/4 px-3 py-1 text-[11px] text-slate-200 shadow-inner shadow-black/10">
+          <span>{wordCount} words</span>
+          <span className="text-slate-700">•</span>
+          <span>{lineCount} lines</span>
+        </div>
+
+        <button
+          onClick={exportAsText}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/4 hover:bg-white/6 border border-white/8 hover:border-white/12 text-xs md:text-sm font-medium text-slate-200 hover:text-white transition-all shadow-inner shadow-black/10"
+        >
+          <Download size={14} className="text-emerald-400" />
+          <span className="hidden sm:inline">Export</span>
+        </button>
+
         {/* Copy All Button */}
         <button
           onClick={copyAllContent}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/80 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-xs md:text-sm font-medium text-slate-300 hover:text-white transition-all"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/4 hover:bg-white/6 border border-white/8 hover:border-white/12 text-xs md:text-sm font-medium text-slate-200 hover:text-white transition-all shadow-inner shadow-black/10"
         >
           {copiedContent ? (
             <>
@@ -200,12 +226,12 @@ export default function Header({
         <button
           onClick={onSave}
           disabled={saveStatus === 'saving'}
-          className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg font-bold text-xs md:text-sm shadow-md hover:shadow-indigo-600/10 active:scale-[0.98] transition-all ${
+          className={`flex items-center gap-1.5 px-4 py-1.5 rounded-xl font-semibold text-xs md:text-sm shadow-md hover:shadow-black/20 active:scale-[0.98] transition-all ${
             saveStatus === 'saving'
               ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700/50'
               : saveStatus === 'saved'
               ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-950/20'
-              : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-950/20'
+              : 'bg-white text-slate-950 hover:bg-slate-100 shadow-black/15'
           }`}
         >
           {saveStatus === 'saving' ? (
