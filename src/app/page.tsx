@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Key, ShieldAlert, Cpu, Sparkles, RefreshCw, Layers, Clock3, FileText, Code2, NotebookPen } from 'lucide-react';
 import { useToast } from '@/components/Toast';
@@ -11,7 +11,12 @@ export default function Home() {
   const { showToast } = useToast();
   const [padKey, setPadKey] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const recentPads = getRecentPads();
+  const [recentPads, setRecentPads] = useState(() => [] as ReturnType<typeof getRecentPads>);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setRecentPads(getRecentPads());
+  }, []);
 
   const templates = [
     { name: 'Quick Notes', icon: NotebookPen, language: 'plaintext', description: 'Capture ideas, tasks, and meeting points in seconds.', content: 'Welcome to your new scratchpad.\n\n- Idea\n- Task\n- Next step' },
@@ -204,7 +209,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="rounded-2xl glass-panel-glow p-5 border border-slate-800/70 animate-card-rise overflow-hidden">
+          <section suppressHydrationWarning className="rounded-2xl glass-panel-glow p-5 border border-slate-800/70 animate-card-rise overflow-hidden">
             <div className="flex items-center gap-2 mb-4">
               <Clock3 className="text-emerald-300" size={18} />
               <div>
