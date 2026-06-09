@@ -77,7 +77,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex-1 w-full min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden bg-[#070b13]">
+    <main className="flex-1 w-full min-h-screen flex flex-col items-center justify-center px-4 relative overflow-x-hidden bg-[#070b13]">
       {/* Ambient background layers */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.08),_transparent_25%),radial-gradient(circle_at_bottom_right,_rgba(168,85,247,0.08),_transparent_20%)]" />
       <div className="ambient-orb ambient-orb-one" />
@@ -90,7 +90,7 @@ export default function Home() {
         {/* Hero Section */}
         <div className="text-center flex flex-col items-center gap-4">
           {/* Decorative pill badge */}
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/8 bg-white/5 text-xs font-semibold text-slate-200 shadow-sm shadow-black/10 backdrop-blur-md">
+          <div className="inline-flex max-w-full items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-white/8 bg-white/5 text-xs font-semibold text-slate-200 shadow-sm shadow-black/10 backdrop-blur-md">
             <Sparkles size={12} className="text-indigo-200" />
             <span>Clean, calm, and built for instant sharing</span>
           </div>
@@ -99,7 +99,7 @@ export default function Home() {
             Scratch<span className="text-indigo-400">Pad</span>
           </h1>
 
-          <p className="text-sm sm:text-lg text-slate-300 max-w-2xl font-medium leading-relaxed break-words px-2">
+          <p className="text-sm sm:text-lg text-slate-300 max-w-2xl font-medium leading-relaxed break-words px-2 overflow-wrap-anywhere">
             A quiet, no-login workspace for notes, snippets, drafts, and quick sharing across any device.
           </p>
 
@@ -188,16 +188,16 @@ export default function Home() {
                     type="button"
                     onClick={() => handleCreateTemplate(template)}
                     disabled={isLoading}
-                    className="w-full min-w-0 rounded-2xl border border-slate-800 bg-slate-950/60 p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-indigo-500/40 hover:bg-slate-900/80"
+                    className="w-full min-w-0 rounded-2xl border border-slate-800 bg-slate-950/60 p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-indigo-500/40 hover:bg-slate-900/80 overflow-hidden"
                   >
-                    <div className="flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-2 text-indigo-200">
+                    <div className="flex min-w-0 items-start justify-between gap-3">
+                      <div className="flex min-w-0 items-center gap-2 text-indigo-200">
                         <Icon size={16} />
-                        <span className="text-sm font-semibold">{template.name}</span>
+                        <span className="min-w-0 break-words text-sm font-semibold">{template.name}</span>
                       </div>
-                      <span className="rounded-full border border-indigo-500/20 bg-indigo-500/10 px-2 py-1 text-[10px] uppercase tracking-[0.25em] text-indigo-200">{template.language}</span>
+                      <span className="shrink-0 rounded-full border border-indigo-500/20 bg-indigo-500/10 px-2 py-1 text-[10px] uppercase tracking-[0.25em] text-indigo-200">{template.language}</span>
                     </div>
-                    <p className="mt-3 text-xs text-slate-400 leading-relaxed break-words whitespace-normal">{template.description}</p>
+                    <p className="mt-3 text-xs text-slate-400 leading-relaxed break-words whitespace-normal overflow-wrap-anywhere">{template.description}</p>
                   </button>
                 );
               })}
@@ -221,13 +221,13 @@ export default function Home() {
                     key={pad.path}
                     type="button"
                     onClick={() => router.push(`/${pad.path}`)}
-                    className="w-full min-w-0 rounded-2xl border border-slate-800 bg-slate-950/60 p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-500/30 hover:bg-slate-900/80"
+                    className="w-full min-w-0 rounded-2xl border border-slate-800 bg-slate-950/60 p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-500/30 hover:bg-slate-900/80 overflow-hidden"
                   >
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="text-sm font-semibold text-slate-100 break-all">/{pad.path}</span>
-                      <span className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-1 text-[10px] uppercase tracking-[0.25em] text-emerald-200">{pad.language}</span>
+                    <div className="flex min-w-0 items-start justify-between gap-3">
+                      <span className="min-w-0 break-all text-sm font-semibold text-slate-100">/{pad.path}</span>
+                      <span className="shrink-0 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-1 text-[10px] uppercase tracking-[0.25em] text-emerald-200">{pad.language}</span>
                     </div>
-                    <p className="mt-2 text-xs text-slate-400 break-words whitespace-normal">Last opened {new Date(pad.updatedAt).toLocaleString()}</p>
+                    <p className="mt-2 text-xs text-slate-400 break-words whitespace-normal overflow-wrap-anywhere">Last opened {new Date(pad.updatedAt).toLocaleString()}</p>
                   </button>
                 ))}
               </div>
