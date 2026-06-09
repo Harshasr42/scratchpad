@@ -90,7 +90,7 @@ export default function Home() {
       <div className="ambient-orb ambient-orb-three" />
 
       {/* Outer Content Layout Container */}
-      <div className="max-w-6xl w-full flex flex-col items-center gap-10 z-10 py-12 px-1 sm:px-0">
+      <div className="w-full max-w-5xl flex flex-col items-center gap-10 z-10 py-12 px-1 sm:px-0">
         
         {/* Hero Section */}
         <div className="text-center flex flex-col items-center gap-4">
@@ -175,7 +175,7 @@ export default function Home() {
         </div>
 
         {/* Templates + Recent Pads Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-6 max-w-5xl w-full border-t border-slate-900/60 pt-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-6 w-full max-w-4xl border-t border-slate-900/60 pt-10">
           <section className="rounded-2xl glass-panel-glow p-5 border border-indigo-500/15 animate-card-rise overflow-hidden">
             <div className="flex items-center justify-between gap-2 mb-4">
               <div>
@@ -241,7 +241,7 @@ export default function Home() {
         </div>
 
         {/* Feature Grid Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl w-full pt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-4xl pt-6">
           
           <div className="flex flex-col gap-2 p-5 rounded-2xl glass-panel hover:bg-slate-900/20 transition-colors border border-slate-900">
             <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
