@@ -85,7 +85,7 @@ export default function Home() {
       <div className="ambient-orb ambient-orb-three" />
 
       {/* Outer Content Layout Container */}
-      <div className="max-w-6xl w-full flex flex-col items-center gap-10 z-10 py-12">
+      <div className="max-w-6xl w-full flex flex-col items-center gap-10 z-10 py-12 px-1 sm:px-0">
         
         {/* Hero Section */}
         <div className="text-center flex flex-col items-center gap-4">
@@ -99,7 +99,7 @@ export default function Home() {
             Scratch<span className="text-indigo-400">Pad</span>
           </h1>
 
-          <p className="text-sm sm:text-lg text-slate-300 max-w-2xl font-medium leading-relaxed">
+          <p className="text-sm sm:text-lg text-slate-300 max-w-2xl font-medium leading-relaxed break-words px-2">
             A quiet, no-login workspace for notes, snippets, drafts, and quick sharing across any device.
           </p>
 
@@ -111,7 +111,7 @@ export default function Home() {
         </div>
 
         {/* Input Card Container */}
-        <div className="max-w-xl w-full rounded-3xl glass-panel-glow p-6 sm:p-8 animate-slide-in relative border border-white/8 shadow-[0_18px_60px_rgba(0,0,0,0.25)]">
+        <div className="max-w-xl w-full rounded-3xl glass-panel-glow p-6 sm:p-8 animate-slide-in relative border border-white/8 shadow-[0_18px_60px_rgba(0,0,0,0.25)] overflow-hidden">
           <form onSubmit={handleGoToPad} className="flex flex-col gap-4">
             
             {/* Input field */}
@@ -134,7 +134,7 @@ export default function Home() {
                   className="w-full pl-12 pr-4 py-3.5 bg-slate-950/85 hover:bg-slate-950 border border-slate-800 focus:border-indigo-300 text-slate-100 placeholder-slate-500 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-400/15 transition-all font-mono text-sm sm:text-base shadow-inner shadow-black/30"
                 />
               </div>
-              <span className="text-[10px] text-slate-500 font-mono mt-1">
+              <span className="text-[10px] text-slate-500 font-mono mt-1 break-all">
                 Your pad will be accessible at: <span className="text-indigo-400/80">scratchpad.com/{padKey ? sanitizeKey(padKey) : 'your-key'}</span>
               </span>
             </div>
@@ -171,7 +171,7 @@ export default function Home() {
 
         {/* Templates + Recent Pads Section */}
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-6 max-w-5xl w-full border-t border-slate-900/60 pt-10">
-          <section className="rounded-2xl glass-panel-glow p-5 border border-indigo-500/15 animate-card-rise">
+          <section className="rounded-2xl glass-panel-glow p-5 border border-indigo-500/15 animate-card-rise overflow-hidden">
             <div className="flex items-center justify-between gap-2 mb-4">
               <div>
                 <p className="text-[10px] uppercase tracking-[0.35em] text-indigo-300/80">Templates</p>
@@ -188,7 +188,7 @@ export default function Home() {
                     type="button"
                     onClick={() => handleCreateTemplate(template)}
                     disabled={isLoading}
-                    className="rounded-2xl border border-slate-800 bg-slate-950/60 p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-indigo-500/40 hover:bg-slate-900/80"
+                    className="w-full min-w-0 rounded-2xl border border-slate-800 bg-slate-950/60 p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-indigo-500/40 hover:bg-slate-900/80"
                   >
                     <div className="flex items-center justify-between gap-3">
                       <div className="flex items-center gap-2 text-indigo-200">
@@ -197,14 +197,14 @@ export default function Home() {
                       </div>
                       <span className="rounded-full border border-indigo-500/20 bg-indigo-500/10 px-2 py-1 text-[10px] uppercase tracking-[0.25em] text-indigo-200">{template.language}</span>
                     </div>
-                    <p className="mt-3 text-xs text-slate-400 leading-relaxed">{template.description}</p>
+                    <p className="mt-3 text-xs text-slate-400 leading-relaxed break-words whitespace-normal">{template.description}</p>
                   </button>
                 );
               })}
             </div>
           </section>
 
-          <section className="rounded-2xl glass-panel-glow p-5 border border-slate-800/70 animate-card-rise">
+          <section className="rounded-2xl glass-panel-glow p-5 border border-slate-800/70 animate-card-rise overflow-hidden">
             <div className="flex items-center gap-2 mb-4">
               <Clock3 className="text-emerald-300" size={18} />
               <div>
@@ -221,13 +221,13 @@ export default function Home() {
                     key={pad.path}
                     type="button"
                     onClick={() => router.push(`/${pad.path}`)}
-                    className="w-full rounded-2xl border border-slate-800 bg-slate-950/60 p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-500/30 hover:bg-slate-900/80"
+                    className="w-full min-w-0 rounded-2xl border border-slate-800 bg-slate-950/60 p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-500/30 hover:bg-slate-900/80"
                   >
                     <div className="flex items-center justify-between gap-3">
-                      <span className="text-sm font-semibold text-slate-100">/{pad.path}</span>
+                      <span className="text-sm font-semibold text-slate-100 break-all">/{pad.path}</span>
                       <span className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-1 text-[10px] uppercase tracking-[0.25em] text-emerald-200">{pad.language}</span>
                     </div>
-                    <p className="mt-2 text-xs text-slate-400">Last opened {new Date(pad.updatedAt).toLocaleString()}</p>
+                    <p className="mt-2 text-xs text-slate-400 break-words whitespace-normal">Last opened {new Date(pad.updatedAt).toLocaleString()}</p>
                   </button>
                 ))}
               </div>
